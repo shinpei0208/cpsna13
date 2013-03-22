@@ -1,0 +1,26 @@
+\section{Introduction}
+\label{sec:introduction}
+
+Grand challenges of cyber-physical systems (CPS) include a high
+computational cost of understanding the physical world.
+Image-based object detection is one of compute-intensive tasks for CPS.
+For example, an autonomous vehicle needs to detect and track other
+vehicles by itself.
+Current autonomous driving technologies \cite{Guizzo11, Levinson11,
+Urmson08} tend to rely on active sensors such as GPS, RADAR, and LIDAR
+\cite{Kirchner00, Streller02} together with very accurate pre-configured
+maps, but the use of passive camera sensors is becoming more practical
+due to recent advances in computer vision \cite{Dalal05, Felzenszwalb05,
+Felzenszwalb10}: vision-based object detection can be applied for
+various ranges and orientations.
+In particular, histograms of oriented gradients (HOG) \cite{Dalal05}
+features provide reliable high-level representations of an image
+underlying many state-of-the-art object detection
+algorithms~\cite{Felzenszwalb10, Geiger12, Rybski10, Suard06, Zhu06}.
+However, a major concern of HOG-based object detection remains in
+computational cost.
+
+Previous work on the implementation of HOG-based object detection are
+limited to either hardware implementations \cite{Kadota09, Karakaya09,
+Komorkiewicz12} or specific parts of the HOG algorithm \cite{Chen11,
+Prisacariu09}.
