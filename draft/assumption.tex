@@ -2,14 +2,14 @@
 \label{sec:assumption}
 
 We consider the system composed of a multicore CPU and commodity GPU.
-They communicate with each other through the PCIe bus.
-We use CUDA \cite{NVIDIA_CUDA} for GPU programming.
-Its  development environment can be downloaded from NVIDIA's website
-\cite{NVIDIA_NVCC}.
+They communicate with each other via the PCIe bus.
+We use CUDA \cite{NVIDIA_CUDA} for GPU programming, whose development
+environment can be downloaded from NVIDIA's website \cite{NVIDIA_NVCC}.
 Input images are loaded from pre-captured JPEG files, since we focus on
 a high computational cost of image processing.
-A system coordination of computations and I/O devices is outside the
+Systemized coordinations of computations and I/O devices are outside the
 scope of this paper.
+The use of multiple GPUs is also not in consideration.
 
 We follow the object detection method presented by Felzenszwalb
 \textit{et. al.} \cite{Felzenszwalb10}, where objects are represented by
@@ -33,6 +33,17 @@ Specifically they include $2$ root filters and $12$ part filters, each
 of which needs to be scored against $32$ resized images.
 The scoring could be conducted for every $8 \times 8$ or $4 \times 4$
 pixels independently.
-In consequence, there are about $100$ billion computational blocks for
-high-definition images.
+In consequence, there are approximately $100$ billion computational
+blocks for a single high-definition image, while the frame-rate needs to
+meet $10$ to $20$ frames per second (FPS) for practical use.
+This data-parallel compute-intensive nature of HOG-based object
+detection motivates the use of GPUs in this paper.
 
+The CPU implementation of HOG-based vehicle detection has already been
+developed in prior work \cite{Niknejad12}.
+It leverages the POSIX \textit{pthread} to parallelize the scoring per
+filter on a multicore CPU.
+While we use this multicore implementation for a performance comparison
+as it is, we also serialize it to execute on a single core so that we
+can compare our GPU implementation to two variants of the CPU
+implementation.
