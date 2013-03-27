@@ -31,9 +31,9 @@ cost of scoring similarity of an imput image and the models using HOG
 features is very expensive.
 Specifically they include $2$ root filters and $12$ part filters, each
 of which needs to be scored against $32$ resized images.
-The scoring could be conducted for every $8 \times 8$ or $4 \times 4$
-pixels independently.
-In consequence, there are approximately $100$ billion computational
+The scoring could be conducted for every squire of a few pixels
+independently.
+In consequence, there are approximately 10 million computational
 blocks for a single high-definition image, while the frame-rate needs to
 meet $10$ to $20$ frames per second (FPS) for practical use.
 This data-parallel compute-intensive nature of HOG-based object

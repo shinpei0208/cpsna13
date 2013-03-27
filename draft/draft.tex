@@ -6,6 +6,7 @@
 \usepackage{url}
 \usepackage{cite}
 \usepackage{comment}
+\usepackage{listings}
 
 %-----------------------------------------
 % need for camera-ready
@@ -31,6 +32,30 @@ Technological Institute}
 
 
 \maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% listings setting
+\lstset{%
+  language={C},
+  basicstyle={\small},%
+  identifierstyle={\small},%
+  commentstyle={\small\itshape},%
+  keywordstyle={\small\bfseries},%
+  ndkeywordstyle={\small},%
+  stringstyle={\small\itshape},
+  frame={single},
+  breaklines=true,
+  columns=[l]{fullflexible},%
+  numbers=left,%
+  xrightmargin=5pt,%
+  xleftmargin=10pt,%
+  numberstyle={\scriptsize},%
+  stepnumber=1,
+  numbersep=5pt,%
+  lineskip=-0.5ex,%
+  showspaces=false
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %-----------------------------------------
 % need for camera-ready

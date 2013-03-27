@@ -75,21 +75,23 @@ The detailed procedure and algorithm description are presented in
 
 In order to identify computationally time-consuming blocks of the object
 detection program, we conducted a preliminary measurement running the
-original sequential code \cite{Niknejad12} on a standard Intel Core i7
+original sequential code \cite{Niknejad12} on a generic Intel Core i7
 2700K CPU.
-The measurement approach is straightforward.
+The measurement method is straightforward.
 We find high-level \textit{for} loops (in case that the program is
 written in the C-like language) by scanning the program structure and
 make a timestamp for each loop.
 The result of measurement is shown in Fig.~\ref{fig:breakdown}.
+Note that a label ``others'' represents the computation time excluding
+the high-level \textit{for} loops.
 This breakdown of computation times provides us with a hint of how to
 approach GPU implementations.
 Specifically an obvious computational bottleneck appears in the
-calculation of similarity scores againt the part filters, which
+calculation of similarity scores against the part filters, which
 corresponds to partly ``Step 4)`` in the above program sequence.
 This block dominates $58\%$ of the total time.
 On the other hand, the calculation of HOG features corresponding ``Step
-2)'' spends $21\%$ of the total time, while the detection and recognition
+3)'' spends $21\%$ of the total time, while the detection and recognition
 of the object, \textit{i.e.}, ``Step 5)'' and ``Step 6)'', contribute to
 $10\%$ and $8\%$ of the total time respectively.
 
@@ -103,6 +105,17 @@ a very high degree of parallelism and could be accelerated on the GPU.
 
 \subsection{Implementation Approach}
 
+We parallelize all the high-level \textit{for} loops of the program
+using the GPU.
+According to the measurement result in Fig.~\ref{fig:breakdown}, the
+scoring of the root filters is a minor factor ($2\%$) of the total
+time, but its program structure is almost identical to that of the part
+filters and they adhere to continuous blocks.
+Hence we include it to the GPU code.
+In the rest of this section, we focus on the implementation of the
+scoring of these filters, which is the most dominant part of the
+program, due to a space constraint.
+
 \begin{figure}[t]
  \begin{center}
   \includegraphics[width=\hsize]{fig/threads_shape.pdf}\\
@@ -110,5 +123,29 @@ a very high degree of parallelism and could be accelerated on the GPU.
   \label{fig:threads_shape}
  \end{center}
 \end{figure}
+
+Fig.~\ref{fig:threads_shape} illustrates a conceptual structure and flow
+of our GPU implementation.
+We have 32 resized pictures to be able to detect different sizes of the
+object, \textit{i.e.}, \texttt{N} is 32.
+We also have $2$ root filters and $12$ part filters to be able to detect
+different shapes or angles of the object, \textit{i.e.}, \texttt{M} is 2
+or 12.
+A minimum piece of the similarity score for a HOG representation and an
+object model can be calculated for each pixel of the filtered area
+independently.
+This area could be larger than a squire of $100$ pixels (equivalent to
+\texttt{max\_width} $\times$ \texttt{max\_height}) for a $640 \times 480$
+size of an image when using the trained data obtained from previous work
+\cite{Niknejad12}.
+Therefore the number of producible compute threads could be an order of
+millions in this setup.
+We shape these threads by blocks and grids for CUDA as shown in
+Fig.~\ref{fig:threads_shape} where each block size is \texttt{max\_width}
+$\times$ \texttt{max\_height} $\times$ \texttt{M} and each grid size is
+\texttt{N}.
+This shape is considered for ease of programming and a different shape
+may further improve performance but such a fine-grained performance
+tuning is outside the scope of this paper.
 
 \subsection{GPU Programming}
