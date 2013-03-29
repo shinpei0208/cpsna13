@@ -152,4 +152,71 @@ tuning is outside the scope of this paper.
 
 Once computational blocks of the program to be parallelized are
 determined, we can focus on the program structure rather than the
-context to implement the program using the GPU.
+context when implementing the GPU code.
+Listing~\ref{lst:score} illustrates a loop structure of the procedure
+to score similarity of the input HOG image and the pre-defined object
+models.
+We find this structure containing fairly high parallelism, which means
+that the impact of GPU implementations is significant, and apply the
+implementation approach described in Fig.~\ref{fig:threads_shape}; the
+depth of the third (\texttt{C\_height}) and the forth
+(\texttt{C\_width}) loops is variable, and they could reach
+\texttt{max\_height} and \texttt{max\_width} respectively.
+Since these loops are independent with each other, we unroll all the
+loops and assign all the elements of the iteration to millions of
+individual threads on the GPU as shown in Fig.~\ref{fig:threads_shape}.
+
+\begin{lstlisting}[caption=The program structure of similarity scoring, label=lst:score]
+  for(int level=0; level<RESIZED_INPUT_NUM; level++) {
+    for(int i=0; i<ROOTFILTER_NUM; i++) {
+      for(int j=0; j<C_height; j++) {
+        for(int k=0; k<C_width; k++) {
+          .....
+        }
+      }
+    }
+    for(int i=0; i<PARTFILTER_NUM; i++) {
+      for(int j=0; j<C_height; j++) {
+        for(int k=0; k<C_width; k++) {
+          .....
+        }
+      }
+    }
+  }
+\end{lstlisting}
+
+As aforementioned, GPU programming involes some trade-offs.
+It is not straightforward to address these trade-offs due to a complex
+architecture of the GPU.
+For example, parallel threads may conflict on some functional unit.
+Reducing the number of parallel threads mitigates this conflict but
+results in less parallelism.
+The best trade-off is obtained from optimized shapes of blocks and grids
+depending on the GPU architecture.
+We adopt comprehensive shapes of blocks and grids as presented in
+Fig.~\ref{fig:threads_shape} because it simplifies programming while
+still providing much better performance than CPU implementations.
+An optimization of GPU programming is left open for future work.
+
+Listing~\ref{lst:detect} illustrates the remainig parts of the program
+that we parallelize using the GPU.
+We also unroll all the loops of these blocks to accelerate computations
+on the GPU.
+Due to a space constraint, we skip the details of implementation approaches.
+
+\begin{lstlisting}[caption=The program structure of region detection, label=lst:detect]
+  for(int level=0; level<RESIZED_INPUT_NUM; level++) {
+    for(int cmp; cmp<COMPONENT_NUM; cmp++) {
+      for(int kk=0; kk<numpart[cmp]; kk++) {
+        for(int x=0; x<dims[0]; x++) {
+          ......
+        }
+        for(int y=0; y<dims[1]; y++) {
+          ......
+        }
+        .....
+      }
+      sum_score(.....);
+    }
+  }
+\end{lstlisting}
