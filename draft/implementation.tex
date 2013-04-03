@@ -38,6 +38,17 @@ worth exploring a more efficient way of GPU programming.
 This paper provides a guideline of how to use GPUs in an efficient way
 for vision-based object detection.
 
+As aforementioned, we use CUDA~\cite{NVIDIA_CUDA} for GPU programming.
+A unit of code that is individually launched on the GPU is called
+a \textit{kernel}.
+The kernel is composed of multiple \textit{threads} that execute the
+code in parallel.
+A unit of threads that are co-scheduled by hardware is called a
+\textit{block}, while a collection of blocks for the corresponding
+kernel is called a \textit{grid}.  
+The maximum number of threads that can be contained by an individual
+block is defined by the GPU architecture.
+
 \subsection{Program Analysis}
 \label{sec:analysis}
 
@@ -76,7 +87,7 @@ The detailed procedure and algorithm description are presented in
 In order to identify computationally time-consuming blocks of the object
 detection program, we conducted a preliminary measurement running the
 original sequential code \cite{Niknejad12} on a generic Intel Core i7
-2700K CPU.
+3930K CPU (3.2GHz).
 The measurement method is straightforward.
 We find high-level \textit{for} loops (in case that the program is
 written in the C-like language) by scanning the program structure and
@@ -198,8 +209,8 @@ Fig.~\ref{fig:threads_shape} because it simplifies programming while
 still providing much better performance than CPU implementations.
 An optimization of GPU programming is left open for future work.
 
-Listing~\ref{lst:detect} illustrates the remainig parts of the program
-that we parallelize using the GPU.
+Listing~\ref{lst:detect}~and~\ref{lst:hog} illustrate the remainig parts
+of the program that we parallelize using the GPU.
 We also unroll all the loops of these blocks to accelerate computations
 on the GPU.
 Due to a space constraint, we skip the details of implementation approaches.
@@ -217,6 +228,18 @@ Due to a space constraint, we skip the details of implementation approaches.
         .....
       }
       sum_score(.....);
+    }
+  }
+\end{lstlisting}
+
+\begin{lstlisting}[caption=The program structure of HOG calculation, label=lst:hog]
+  for(int ii=0; ii<interval; ii++) {
+    for(int x=0; x<vis_R[1]; x++) {
+      for(int y=0; y<vis_R[0]; y++) {
+        .....
+        *(Htemp+ ixp_b+iyp)+=vy1*vx1Xv; // need atomicity
+        ......
+      }
     }
   }
 \end{lstlisting}
