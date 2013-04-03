@@ -30,12 +30,12 @@ primary object detection part.
 \begin{figure}[t]
  \begin{center}
   \includegraphics[width=\hsize]{fig/float_exe_time.eps}\\
-  \caption{Execution times of the single precision floating point program.}
+  \caption{computation times of the single precision floating point program.}
   \label{fig:float_exe_time}
  \end{center}
 \end{figure}
 
-Fig.~\ref{fig:float_exe_time} shows the execution times of all variants
+Fig.~\ref{fig:float_exe_time} shows the computation times of all variants
 of the vehicle detection program configured to use the single precision
 for floating operations.
 The dimensions of input images are 640$\times$480 pixels.
@@ -77,12 +77,12 @@ program or the algorithm.
 \begin{figure}[t]
  \begin{center}
   \includegraphics[width=\hsize]{fig/double_exe_time.eps}\\
-  \caption{Execution times of the double precision floating point program.}
+  \caption{computation times of the double precision floating point program.}
   \label{fig:double_exe_time}
  \end{center}
 \end{figure}
 
-Fig. \ref{fig:double_exe_time} shows the execution times of all variants
+Fig. \ref{fig:double_exe_time} shows the computation times of all variants
 of the vehicle detection problem configuired to use the double precision
 for floating operations.
 Unlike the single-precision scenario, the Kepler GPUs outperform the
@@ -98,13 +98,13 @@ program uses the TITAN GPU for a better cost performance.
 \begin{figure}[t]
  \begin{center}
   \includegraphics[width=\hsize]{fig/time_on_image_size.eps}\\
-  \caption{Impact of the image size on execution times.}
+  \caption{Impact of the image size on computation times.}
   \label{fig:time_on_image_size}
  \end{center}
 \end{figure}
 
 Fig. \ref{fig:time_on_image_size} shows the impact of the image size on
-execution times. 
+computation times. 
 We herein use the program configured to use the single precision for
 floating-point operations.
 The GPU implementation uses the GeForce GTX 580 GPU, which is the best
@@ -115,3 +115,22 @@ image size.
 This means that the benefit of our GPU implementations as compared to
 the traditional CPU implementations would hold for more high-resolution
 image processing.
+
+\begin{figure}[t]
+ \begin{center}
+  %\includegraphics[width=\hsize]{fig/time_on_image_size.eps}\\
+  ADD FIGURE HERE 
+  \caption{Impact of the block and thread shapes on computation times.}
+  \label{fig:time_on_block_thread_shapes}
+ \end{center}
+\end{figure}
+
+
+\begin{figure}[t]
+ \begin{center}
+  %\includegraphics[width=\hsize]{fig/time_on_image_size.eps}\\
+  ADD FIGURE HERE 
+  \caption{The breakdown of computation times of the GPU implementation.}
+  \label{fig:breakdown_gpu}
+ \end{center}
+\end{figure}
