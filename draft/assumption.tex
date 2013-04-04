@@ -19,6 +19,14 @@ be modeled at multiple scales.
 This is one of the most recognized approach to object detection.
 See \cite{Felzenszwalb10} for the detail.
 
+\begin{figure}[t]
+ \begin{center}
+  \includegraphics[width=\hsize]{fig/deformable_model.eps}\\
+  \caption{Vehicle detection flow with deformable models.}
+  \label{fig:deformable_model}
+ \end{center}
+\end{figure}
+
 Object detection often requires a machine learning phase to construct
 the object models.
 We assume that this learning phase has already been done a priori and
@@ -26,6 +34,8 @@ the object models are stored in the system.
 Particularly we restrict our attention to vehicle detection in this
 paper, utilizing the vehicle models provided by prior work
 \cite{Niknejad12}.
+A brief concept of this approach is illustrated in
+Fig.~\ref{fig:deformable_model}.
 Although these models achieve a high detection rate, the computational
 cost of scoring similarity of an imput image and the models using HOG
 features is very expensive.

@@ -2,11 +2,11 @@
 \label{sec:evaluation}
 
 We now demonstrate performance improvements brought by our GPU
-implementations using the existing vehicle detection program
+implementations for the existing vehicle detection program
 \cite{Niknejad12}.
-We further provide the details of performance comparisons among our GPU
-implementations and prior CPU implementations to discuss fundamental
-factors that allowed the GPU to outperform the CPU.
+We also discuss the details of performance comparisons among our GPU
+implementations and traditional CPU implementations identifying the
+fundamental factors that allowed the GPU to outperform the CPU.
 
 \subsection{Experimental Setup}
 \label{sec:setup}
@@ -35,6 +35,14 @@ primary object detection part.
  \end{center}
 \end{figure}
 
+\begin{figure}[t]
+ \begin{center}
+  \includegraphics[width=\hsize]{fig/double_exe_time.eps}\\
+  \caption{computation times of the double precision floating point program.}
+  \label{fig:double_exe_time}
+ \end{center}
+\end{figure}
+
 Fig.~\ref{fig:float_exe_time} shows the computation times of all variants
 of the vehicle detection program configured to use the single precision
 for floating operations.
@@ -60,8 +68,8 @@ their complex architecture.
 Since the vehicle detection program is compute-intensive as depicted
 through Listing~\ref{lst:score} to \ref{lst:hog}, the operating 
 frequency is more dominating than the architectural benefit.
-This is a useful finding toward the future development of image
-processing with GPUs.
+This is a useful finding toward the future development of GPU-based
+image processing.
 
 As a result, the best performance is obtained from such a setup that
 uses the multicore implementation for the HOG calculation while using
@@ -74,14 +82,6 @@ application program is a significant contribution, whereas often an
 order-of-magnitude speed-up is reported for a particular part of the
 program or the algorithm.
 
-\begin{figure}[t]
- \begin{center}
-  \includegraphics[width=\hsize]{fig/double_exe_time.eps}\\
-  \caption{computation times of the double precision floating point program.}
-  \label{fig:double_exe_time}
- \end{center}
-\end{figure}
-
 Fig. \ref{fig:double_exe_time} shows the computation times of all variants
 of the vehicle detection problem configuired to use the double precision
 for floating operations.
@@ -91,8 +91,9 @@ This explains that the double-precision performance of GPUs is improved
 as the generation of GPUs advances.
 Another notable finding is that the TITAN GPU is slightly faster than
 the K20Xm GPU for our vehicle detection program.
-Given that the TITAN GPU is a consumer price while the K20Xm is very
-expensive for supercomputing, we suggest that the vehicle detection
+This is due to a slightly higher operating frequency of the TITAN GPU.
+Since the TITAN GPU is a consumer market price while the K20Xm is a very
+expensive supercomputing device, we suggest that the vehicle detection
 program uses the TITAN GPU for a better cost performance.
 
 \begin{figure}[t]
@@ -118,6 +119,24 @@ image processing.
 
 \begin{figure}[t]
  \begin{center}
+  \includegraphics[width=0.6\hsize]{fig/breakdown_gpu.eps}\\
+  \caption{The breakdown of computation times of the GPU implementation.}
+  \label{fig:breakdown_gpu}
+ \end{center}
+\end{figure}
+
+Fig. \ref{fig:breakdown_gpu} shows the breakdown of computation times of
+the GPU implementation that achieves the best performance for the single
+precision vehicle detection program.
+The memory copy overhead is often claimed to be a bottleneck in GPU
+programming \cite{Jablin_PLDI11}, but our analysis explains that it is
+not the case for the exhibited workload.
+This means that further advances of GPU technology will lead to faster
+implementations of the vehicle detection program, which encourages
+future work to use state-of-the-art GPUs.
+
+\begin{figure}[t]
+ \begin{center}
   %\includegraphics[width=\hsize]{fig/time_on_image_size.eps}\\
   ADD FIGURE HERE 
   \caption{Impact of the block and thread shapes on computation times.}
@@ -125,12 +144,3 @@ image processing.
  \end{center}
 \end{figure}
 
-
-\begin{figure}[t]
- \begin{center}
-  %\includegraphics[width=\hsize]{fig/time_on_image_size.eps}\\
-  ADD FIGURE HERE 
-  \caption{The breakdown of computation times of the GPU implementation.}
-  \label{fig:breakdown_gpu}
- \end{center}
-\end{figure}

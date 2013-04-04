@@ -29,7 +29,7 @@ issues could prevent HOG-based object detection from being deployed in
 real-world applications.
 Given recent innovations in commodity hardware technology such as
 multicores and graphics processing units (GPUs), it is worth
-exploring if the current state of the arts meets computational
+exploring if the current state of the arts can meet computational
 requirements of cutting-edge object detection implementations.
 
 \textbf{Contribution:}
@@ -42,13 +42,13 @@ quantification of performance characteristics for practical use.
 We begin with an analysis of traditional CPU
 implementations to find fundamental performance bottlenecks of HOG-based
 object detection.
-This analysis reasons about our approach to GPU implementations where we
-parallelize compute-intensive blocks of the object detection program
-using the GPU step by step to minimize its makespan.
-The experimental results obstained from a real-world car detection
-program using a commodity GPU show that the GPU outperforms the CPU by
-3x to 5x in frame-rate, while another 5x improvement would be needed
-at least to deploy in the real world.
+This analysis reasons about our approach to GPU implementations that we
+offload only the detected compute-intensive blocks of the object
+detection program to the GPU.
+The experimental results obstained from a real-world vehicle detection
+program show that commodity GPUs outperform high-performance multi-core
+CPUs by 3x to 5x in frame-rate, though at least another 5x improvement
+would be needed to deploy in the real world.
 
 \textbf{Organization:}
 The rest of this paper is organized as follows.
