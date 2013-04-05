@@ -5,18 +5,18 @@ In this paper, we have presented GPU implementations of HOG-based object
 detection and their detailed performance evaluation.
 Unlike preceding work that highly stressed on performance improvements,
 our implementations are based on an analysis of performance bottlenecks
-posed due to an introduction of the deformable models in HOG-based
-object detection.
+posed by an introduction of the deformable models in HOG-based object
+detection.
 This approach ensures that the GPU truly accelerates appropriate
 computational blocks.
 Our experimental results using commodity GPUs showed that our GPU
 implementations can speed up the existing HOG-based vehicle detection
-program tailored to the deformable models by 3x to 5x over traditional
-CPU implementations.
+program tailored to the deformable models by 3x to 5x over the
+traditional CPU implementations.
 Given that this performance improvement is obtained from the entire
-program runtime rather than particular algorithm parts of the program,
-our contribution is useful and significant for real-world applications
-of vision-based object detection. 
+program execution rather than a particular algorithm within the program,
+we believe that our contribution is useful and significant for
+real-world applications of vision-based object detection.
 
 To the best of our knowledge, this is the first piece of work that made
 a \textit{tight} coordination of object detection and parallel computing
@@ -25,7 +25,8 @@ Specifically we showed that a measured and structured way of GPU
 programming is efficient for the object detection program and quantified
 the impact of GPUs in performance.
 Our conclusion is that GPUs are promising to meet the required
-performance of vision-based object detection in the real world.
+performance of vision-based object detection in the real world, while
+performance optimizations remain open problems.
 
 In future work, we plan to complement this work with systematized
 coordination of computations and I/O devices.
@@ -35,6 +36,6 @@ I/O latency could become a non-trivial bottleneck on the data bus.
 In this scenario, we need enhanced system support such as zero-copy
 approaches \cite{Kato13} to minimize the data latency raised between
 camera sensors and GPUs.
-We also plan to augment our GPU implementations using multiple GPUs in
-order to meet the real-time and real-fast requirement of real-world CPS
-applications.
+We also plan to optimize and augment our GPU implementations using
+multiple GPUs in order to meet the real-time and real-fast requirement
+of real-world CPS applications.

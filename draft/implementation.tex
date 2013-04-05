@@ -78,8 +78,9 @@ The detailed procedure and algorithm description are presented in
 
 \begin{figure}[t]
  \begin{center}
-  \includegraphics[width=0.65\hsize]{fig/breakdown.eps}\\
-  \caption{The breakdown of computation times of the sequential implementation.}
+  \includegraphics[width=0.5\hsize]{fig/breakdown.eps}\\
+  \caption{The breakdown of execution times of the sequential
+  implementation.}
   \label{fig:breakdown}
  \end{center}
 \end{figure}
@@ -87,15 +88,15 @@ The detailed procedure and algorithm description are presented in
 In order to identify computationally time-consuming blocks of the object
 detection program, we conducted a preliminary measurement running the
 original sequential code \cite{Niknejad12} on a generic Intel Core i7
-3930K CPU (3.2GHz).
+3930K CPU (@3.2GHz).
 The measurement method is straightforward.
 We find high-level \textit{for} loops (in case that the program is
 written in the C-like language) by scanning the program structure and
 make a timestamp for each loop.
 The result of measurement is shown in Fig.~\ref{fig:breakdown}.
-Note that a label ``others'' represents the computation time excluding
+Note that a label ``others'' represents the execution time excluding
 the high-level \textit{for} loops.
-This breakdown of computation times provides us with a hint of how to
+This breakdown of execution times provides us with a hint of how to
 approach GPU implementations.
 Specifically an obvious computational bottleneck appears in the
 calculation of similarity scores against the part filters, which
@@ -129,7 +130,7 @@ program, due to a space constraint.
 
 \begin{figure}[t]
  \begin{center}
-  \includegraphics[width=\hsize]{fig/threads_shape.eps}\\
+  \includegraphics[width=0.9\hsize]{fig/threads_shape.eps}\\
   \caption{The number of compute threads and their block shape.}
   \label{fig:threads_shape}
  \end{center}
@@ -151,10 +152,15 @@ size of an image when using the trained data obtained from previous work
 \cite{Niknejad12}.
 Therefore the number of producible compute threads could be an order of
 millions in this setup.
-We shape these threads by blocks and grids for CUDA as shown in
-Fig.~\ref{fig:threads_shape} where each block size is \texttt{max\_width}
-$\times$ \texttt{max\_height} $\times$ \texttt{M} and each grid size is
-\texttt{N}.
+A conceptual structure of these threads is shown in
+Fig.~\ref{fig:threads_shape}.
+We further need to reshape this structure by blocks and grids for CUDA
+programming.
+Specifically we divide each ``\texttt{max\_width} $\times$
+\texttt{max\_height} $\times$ \texttt{M}'' cube into multiple CUDA
+blocks, each of which is composed of $x \times y$ threads.
+They all fit in a single CUDA grid and there are \texttt{N} grids in
+total.
 This shape is considered for ease of programming and a different shape
 may further improve performance but such a fine-grained performance
 tuning is outside the scope of this paper.
