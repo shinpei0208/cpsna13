@@ -94,7 +94,7 @@ Our results truly demonstrate the current performance status of
 state-of-the-art GPUs for practical vehicle detection.
 
 Fig. \ref{fig:double_exe_time} shows the execution times of all variants
-of the vehicle detection problem configuired to use double-precision
+of the vehicle detection problem configured to use double-precision
 floating-point operations.
 Unlike the single-precision scenario, the Kepler GPUs outperform the
 Fermi GPUs.
@@ -171,6 +171,6 @@ This is somewhat an intuitive expectation because each warp of the GPU
 can contain up to 32 threads and a set of two warps is executed every
 two cycles according to the NVIDIA GPU architecture.
 Having less threads per block looses parallelism while introducing more
-threads could cause resource confliction within a block.
+threads could cause resource conflict within a block.
 Therefore a more in-depth investigation is required to truly optimize
 performance.

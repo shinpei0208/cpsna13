@@ -202,7 +202,7 @@ individual threads on the GPU as shown in Fig.~\ref{fig:threads_shape}.
   }
 \end{lstlisting}
 
-As aforementioned, GPU programming involes some trade-offs.
+As aforementioned, GPU programming involves some trade-offs.
 It is not straightforward to address these trade-offs due to a complex
 architecture of the GPU.
 For example, parallel threads may conflict on some functional unit.
@@ -215,7 +215,7 @@ Fig.~\ref{fig:threads_shape} because it simplifies programming while
 still providing much better performance than CPU implementations.
 An optimization of GPU programming is left open for future work.
 
-Listing~\ref{lst:detect}~and~\ref{lst:hog} illustrate the remainig parts
+Listing~\ref{lst:detect}~and~\ref{lst:hog} illustrate the remaining parts
 of the program that we parallelize using the GPU.
 We also unroll all the loops of these blocks to accelerate computations
 on the GPU.
