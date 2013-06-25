@@ -1,0 +1,42 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+In this paper, we have presented GPU implementations of HOG-based object
+detection using deformable part models.
+Our implementations are based on an analysis of performance bottlenecks 
+posed by an introduction of deformable models in HOG-based object
+detection in order to accelerate appropriate computational blocks of the
+program.
+Detailed experiments using commodity GPUs showed that our
+implementations speed up HOG-based vehicle detection program tailored to
+the deformable models by 3x to 5x over the traditional CPU
+implementations.
+Given that this performance improvement is obtained from the entire
+program execution rather than a particular algorithm within the program,
+this is a significant contribution for real-world applications.
+
+To the best of our knowledge, this is the first piece of work that made
+\textit{tight} coordination of object detection and parallel computing
+-- a core challenge of CPS.
+Specifically we showed that a measured and structured way of GPU
+programming is efficient for the object detection program and quantified
+the impact of GPUs in performance.
+Our conclusion is that GPUs are promising to meet the required
+performance of vision-based object detection in the real world, while
+performance optimization remain open problems.
+
+In future work, we plan to complement this work with systematized
+coordination of computations and I/O devices.
+Since real-world applications require camera sensors to obtain input
+images while GPUs are compute devices off the host computer, the data
+I/O latency could become a non-trivial bottleneck on the data bus.
+In this scenario, we need enhanced system support such as zero-copy
+approaches \cite{Kato13} to minimize the data latency raised between
+camera sensors and GPUs.
+We also plan to optimize and augment our GPU implementations using
+multiple GPUs in order to meet the real-time and real-fast requirement
+of real-world CPS applications.
+
+\section*{Acknowledgment}
+
+This work was supported by Grant-in-Aid for Scientific Research 24500058.

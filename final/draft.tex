@@ -1,0 +1,83 @@
+\documentclass[10pt, conference, compsocconf]{IEEEtran}
+%\usepackage[dvipdfmx]{color}
+%\usepackage[dvipdfmx]{graphicx}
+\usepackage{epsfig}
+\usepackage[tight,footnotesize]{subfigure}
+\usepackage{subfigure}
+\usepackage{url}
+\usepackage{cite}
+\usepackage{comment}
+\usepackage{listings}
+
+%-----------------------------------------
+% need for camera-ready
+%\pagestyle{empty}
+%----------------------------------------
+
+\begin{document}
+
+\title{GPU Implementations of Object Detection using HOG
+Features and Deformable Models}
+
+\author{
+\IEEEauthorblockN{Manato Hirabayashi, Shinpei Kato, Masato Edahiro, and
+Kazuya Takeda}
+\IEEEauthorblockA{School of Information Science\\Nagoya University}
+\and
+\IEEEauthorblockN{Taiki Kawano and Seiichi Mita}
+\IEEEauthorblockA{Research Center for Smart Vehicles\\Toyota
+Technological Institute}
+}
+
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% listings setting
+\lstset{%
+  language={C},
+  basicstyle={\small},%
+  identifierstyle={\small},%
+  commentstyle={\small\itshape},%
+  keywordstyle={\small\bfseries},%
+  ndkeywordstyle={\small},%
+  stringstyle={\small\itshape},
+  frame={single},
+  breaklines=true,
+  columns=[l]{fullflexible},%
+  numbers=left,%
+  xrightmargin=5pt,%
+  xleftmargin=10pt,%
+  numberstyle={\scriptsize},%
+  stepnumber=1,
+  numbersep=5pt,%
+  lineskip=-0.5ex,%
+  showspaces=false
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%-----------------------------------------
+% need for camera-ready
+%\thispagestyle{empty}
+
+\input{abstract.tex}
+
+\begin{IEEEkeywords}
+ GPGPU; Computer Vision; Object Detection
+\end{IEEEkeywords}
+
+\input{introduction.tex}
+\input{assumption.tex}
+\input{implementation.tex}
+\input{evaluation.tex}
+\input{conclusion.tex}
+
+\bibliographystyle{plain}
+{\footnotesize
+\bibliography{references}
+}
+
+\end{document}
+
+
+
